@@ -1,0 +1,1201 @@
+<title>Engenharia do Projeto 50</title>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F2F3F4;
+  --surface:#FFFFFF;
+  --surface-2:#E9EAEB;
+  --surface-3:#DADCDE;
+  --border:#D0D2D4;
+  --text:#17181A;
+  --text-muted:#5A5A5A;
+  --text-faint:#8B8D8F;
+  --accent:#0089D6;
+  --accent-soft:#E2F1FC;
+  --accent-2:#B4692A;
+  --good:#1E7A4C;
+  --warn:#B4692A;
+  --bad:#B23A2C;
+  --frame-bg:#0A0B0D;
+  --frame-glass:#141517;
+  --shadow: 0 1px 2px rgba(20,20,20,.06), 0 8px 24px -12px rgba(20,20,20,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A0B0D;
+    --surface:#121315;
+    --surface-2:#1A1B1E;
+    --surface-3:#242628;
+    --border:#28292C;
+    --text:#ECEDEE;
+    --text-muted:#9A9C9E;
+    --text-faint:#616367;
+    --accent:#00A8FF;
+    --accent-soft:#132B3D;
+    --accent-2:#E0A458;
+    --good:#3FBE85;
+    --warn:#E0A458;
+    --bad:#E5695C;
+    --frame-bg:#050506;
+    --frame-glass:#0C0D0F;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A0B0D;
+  --surface:#121315;
+  --surface-2:#1A1B1E;
+  --surface-3:#242628;
+  --border:#28292C;
+  --text:#ECEDEE;
+  --text-muted:#9A9C9E;
+  --text-faint:#616367;
+  --accent:#00A8FF;
+  --accent-soft:#132B3D;
+  --accent-2:#E0A458;
+  --good:#3FBE85;
+  --warn:#E0A458;
+  --bad:#E5695C;
+  --frame-bg:#050506;
+  --frame-glass:#0C0D0F;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Montserrat", ui-sans-serif, system-ui, sans-serif;
+  font-size:15px;
+  line-height:1.6;
+}
+h1,h2,h3,h4{
+  font-family:"Bebas Neue", "Oswald", ui-sans-serif, system-ui, sans-serif;
+  font-weight:400;
+  text-transform:uppercase;
+  letter-spacing:.015em;
+  text-wrap:balance;
+  color:var(--text);
+  margin:0;
+}
+.mono{font-family:"IBM Plex Mono", ui-monospace, monospace;}
+code, .tag, .k, .num{font-family:"IBM Plex Mono", ui-monospace, monospace;}
+
+a{color:var(--accent);}
+
+/* ---------- Shell ---------- */
+.shell{
+  display:grid;
+  grid-template-columns:250px 1fr;
+  max-width:1320px;
+  margin:0 auto;
+}
+.side{
+  position:sticky; top:0; align-self:start;
+  height:100vh;
+  overflow-y:auto;
+  padding:28px 18px 40px 28px;
+  border-right:1px solid var(--border);
+}
+.brand{
+  font-family:"Bebas Neue";
+  font-weight:400;
+  font-size:22px;
+  letter-spacing:.03em;
+}
+.brand .row{display:flex; align-items:center; gap:8px;}
+.brand .mark{flex:none;}
+.brand small{
+  display:block;
+  font-family:"IBM Plex Mono";
+  font-weight:400;
+  font-size:10.5px;
+  letter-spacing:.12em;
+  color:var(--text-faint);
+  text-transform:uppercase;
+  margin-top:6px;
+}
+.side nav{margin-top:32px;}
+.side .grp{margin-bottom:22px;}
+.side .grp-label{
+  font-family:"IBM Plex Mono";
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  margin-bottom:8px;
+}
+.side a{
+  display:block;
+  font-size:13px;
+  color:var(--text-muted);
+  text-decoration:none;
+  padding:5px 0;
+  border-left:2px solid transparent;
+  padding-left:10px;
+  margin-left:-10px;
+}
+.side a:hover{color:var(--text); border-left-color:var(--accent);}
+
+.main{padding:44px 48px 120px;}
+.cover{
+  padding-bottom:40px;
+  margin-bottom:48px;
+  border-bottom:1px solid var(--border);
+}
+.eyebrow{
+  font-family:"IBM Plex Mono";
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:14px;
+}
+.cover h1{font-size:40px; line-height:1.08; max-width:14ch;}
+.cover p.lede{
+  max-width:62ch;
+  color:var(--text-muted);
+  font-size:16px;
+  margin-top:14px;
+}
+.cover-meta{
+  display:flex; gap:28px; margin-top:26px; flex-wrap:wrap;
+}
+.cover-meta div{font-family:"IBM Plex Mono"; font-size:12px; color:var(--text-faint);}
+.cover-meta b{display:block; color:var(--text); font-size:13px; margin-top:2px; font-weight:500;}
+
+section{margin-bottom:64px; scroll-margin-top:24px;}
+.sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:6px;}
+.sec-num{font-family:"IBM Plex Mono"; color:var(--accent); font-size:13px;}
+h2.sec-title{font-size:24px;}
+.sec-sub{color:var(--text-muted); max-width:70ch; margin:10px 0 26px; font-size:14.5px;}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 22px;
+  box-shadow:var(--shadow);
+}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr;}}
+
+.pill{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:"IBM Plex Mono"; font-size:10.5px; letter-spacing:.06em;
+  padding:3px 9px; border-radius:100px; text-transform:uppercase;
+  border:1px solid var(--border); color:var(--text-muted);
+}
+.pill.medido{color:var(--good); border-color:color-mix(in srgb, var(--good) 40%, var(--border));}
+.pill.calc{color:var(--accent); border-color:color-mix(in srgb, var(--accent) 40%, var(--border));}
+.pill.estimado{color:var(--warn); border-color:color-mix(in srgb, var(--warn) 40%, var(--border));}
+.pill.hipotese{color:var(--bad); border-color:color-mix(in srgb, var(--bad) 40%, var(--border));}
+
+table{width:100%; border-collapse:collapse; font-size:13px;}
+th{
+  text-align:left; font-family:"IBM Plex Mono"; font-size:10.5px;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint);
+  padding:8px 10px; border-bottom:1px solid var(--border);
+}
+td{padding:8px 10px; border-bottom:1px solid var(--surface-3); color:var(--text-muted); vertical-align:top;}
+td.field{color:var(--text); font-family:"IBM Plex Mono"; font-size:12.5px;}
+tr:last-child td{border-bottom:none;}
+.tbl-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:10px;}
+.tbl-wrap table{min-width:560px;}
+.tbl-head{
+  padding:14px 16px 0; display:flex; justify-content:space-between; align-items:center;
+}
+.tbl-head h4{font-size:14px;}
+
+.layer{
+  border:1px solid var(--border); border-radius:10px; padding:16px 18px;
+  background:var(--surface);
+}
+.layer + .layer{margin-top:10px;}
+.layer .lname{font-family:"Montserrat"; font-weight:700; font-size:14px; display:flex; align-items:center; gap:10px;}
+.layer .lname .num{font-family:"IBM Plex Mono"; color:var(--accent); font-size:12px;}
+.layer p{color:var(--text-muted); font-size:13px; margin:6px 0 0;}
+.layer .items{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+.chip{
+  font-family:"IBM Plex Mono"; font-size:11px; padding:3px 9px; border-radius:6px;
+  background:var(--surface-2); color:var(--text-muted); border:1px solid var(--border);
+}
+
+/* ---------- Protocolo de treino (plan cards) ---------- */
+.plan-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:22px;}
+@media(max-width:900px){.plan-grid{grid-template-columns:1fr;}}
+.plan-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.plan-head{
+  padding:16px 18px 14px; border-bottom:1px solid var(--border);
+  background:var(--accent-soft);
+}
+.plan-head .plan-title{font-family:"Bebas Neue"; font-size:20px; letter-spacing:.02em; color:var(--text);}
+.plan-head .plan-focus{font-family:"IBM Plex Mono"; font-size:10.5px; color:var(--accent); text-transform:uppercase; letter-spacing:.06em; margin-top:3px;}
+.plan-rows{padding:4px 0;}
+.plan-row{
+  display:flex; align-items:center; gap:10px;
+  padding:9px 18px; border-bottom:1px solid var(--surface-3);
+}
+.plan-row:last-child{border-bottom:none;}
+.plan-row.is-rest{background:var(--surface-2);}
+.plan-num{
+  flex:none; width:18px; height:18px; border-radius:50%;
+  background:var(--surface-2); border:1px solid var(--border);
+  color:var(--text-muted); font-family:"IBM Plex Mono"; font-size:9.5px;
+  display:flex; align-items:center; justify-content:center;
+}
+.plan-thumb{
+  flex:none; width:32px; height:32px; border-radius:8px;
+  background:var(--surface-2); border:1px solid var(--border);
+  color:var(--text-faint);
+  display:flex; align-items:center; justify-content:center;
+}
+.plan-info{flex:1; min-width:0;}
+.plan-name{font-family:"Montserrat"; font-weight:600; font-size:12.5px; color:var(--text);}
+.plan-cue{font-size:10.5px; color:var(--text-faint); margin-top:1px;}
+.plan-right{flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:4px;}
+.plan-meta{
+  font-family:"IBM Plex Mono"; font-size:10px; color:var(--text-muted);
+  text-align:right; white-space:nowrap;
+}
+.plan-carga{
+  font-family:"IBM Plex Mono"; font-size:9px; color:var(--text-faint);
+  border:1px dashed var(--border); border-radius:5px; padding:2px 7px;
+  white-space:nowrap;
+}
+.plan-carga i{font-style:normal; color:var(--accent); letter-spacing:.08em;}
+
+/* ---------- Wireframe phone frames ---------- */
+.frames{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:26px; margin-top:8px;}
+.frame{
+  background:var(--frame-bg);
+  border-radius:26px;
+  padding:8px;
+  box-shadow:var(--shadow);
+}
+.frame .screen{
+  background:var(--frame-glass);
+  border-radius:19px;
+  overflow:hidden;
+  aspect-ratio:9/18.5;
+  display:flex; flex-direction:column;
+  color:#DCE3EA;
+  font-size:9.5px;
+  position:relative;
+}
+.frame .notch{
+  position:absolute; top:6px; left:50%; transform:translateX(-50%);
+  width:56px; height:6px; background:#000; border-radius:10px; z-index:5;
+}
+.frame .caption{
+  font-family:"IBM Plex Mono"; font-size:11px; color:var(--text-muted);
+  margin-top:10px; text-align:center;
+}
+.frame .caption b{color:var(--text); font-weight:500;}
+.sbar{padding:16px 12px 6px; font-family:"IBM Plex Mono"; font-size:8.5px; color:#7C8896; display:flex; justify-content:space-between;}
+.stitle{padding:2px 12px 8px; font-family:"Bebas Neue"; font-weight:400; letter-spacing:.02em; font-size:15px; color:#F1F4F7;}
+.ssub{padding:0 12px 8px; font-size:8px; color:#7C8896; font-family:"IBM Plex Mono"; letter-spacing:.05em; text-transform:uppercase;}
+.sbody{flex:1; padding:0 10px 10px; display:flex; flex-direction:column; gap:6px; overflow:hidden;}
+.wcard{background:#171D25; border:1px solid #262E38; border-radius:8px; padding:8px;}
+.wcard .wlabel{font-family:"IBM Plex Mono"; font-size:7px; letter-spacing:.06em; text-transform:uppercase; color:#6E7A88;}
+.wcard .wval{font-family:"IBM Plex Mono"; font-size:15px; font-weight:600; color:#F1F4F7; margin-top:2px;}
+.wcard .wdelta{font-size:7.5px; color:#4CC38A; margin-top:2px;}
+.wrow{display:flex; gap:6px;}
+.wrow .wcard{flex:1;}
+.wbar{height:5px; background:#262E38; border-radius:3px; overflow:hidden; margin-top:4px;}
+.wbar i{display:block; height:100%; background:#6E97F2;}
+.wtabbar{
+  display:flex; justify-content:space-around; padding:8px 4px; border-top:1px solid #262E38;
+  font-size:6.5px; color:#5B6672; font-family:"IBM Plex Mono";
+}
+.wtabbar .on{color:#F1F4F7;}
+.wchip{font-size:7px; font-family:"IBM Plex Mono"; padding:2px 6px; border:1px solid #2A323C; border-radius:20px; color:#8A94A2; align-self:flex-start;}
+.wgrid2{display:grid; grid-template-columns:1fr 1fr; gap:6px;}
+.wphotoRow{display:flex; gap:5px;}
+.wphoto{flex:1; aspect-ratio:3/4; background:linear-gradient(160deg,#20262f,#141920); border-radius:6px; border:1px solid #262E38;}
+.wbigimg{
+  aspect-ratio:4/3; background:#EDEFF2; border-radius:10px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+  position:relative;
+}
+.wgiftag{
+  font-family:"IBM Plex Mono"; font-size:7px; letter-spacing:.04em; text-transform:uppercase;
+  color:#6E7A88; background:#fff; border:1px solid #D7DCE1; border-radius:20px; padding:2px 7px;
+}
+.wstepper{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:3px; font-family:"IBM Plex Mono"; color:#F1F4F7;
+}
+.wstepper span{
+  width:18px; height:18px; border-radius:5px; background:#20262F; border:1px solid #2A323C;
+  display:flex; align-items:center; justify-content:center; font-size:11px; color:#8FB0FF;
+}
+.wstepper b{font-size:14px; font-weight:600;}
+.wstepper b i{font-style:normal; font-size:8px; color:#6E7A88; margin-left:2px;}
+.wlist .wli{display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #21272F; font-size:8px;}
+.wsilhouette{flex:1; display:flex; align-items:center; justify-content:center; position:relative;}
+.wsilhouette svg{height:100%; opacity:.9;}
+.wdot{position:absolute; width:9px; height:9px; border-radius:50%; background:#6E97F2; border:2px solid #0D1116;}
+
+.legend{display:flex; gap:14px; flex-wrap:wrap; margin:14px 0 0; font-size:12px; color:var(--text-muted);}
+.legend span{display:inline-flex; align-items:center; gap:6px;}
+.legend i{width:9px; height:9px; border-radius:2px; display:inline-block;}
+
+.note{
+  border:1px solid var(--border); border-left:3px solid var(--accent);
+  background:var(--accent-soft); border-radius:0 8px 8px 0;
+  padding:12px 16px; font-size:13px; color:var(--text-muted);
+}
+.note b{color:var(--text);}
+
+pre.mermaid{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px;
+  overflow-x:auto;
+}
+
+footer{
+  border-top:1px solid var(--border); padding-top:24px; margin-top:40px;
+  font-family:"IBM Plex Mono"; font-size:11px; color:var(--text-faint);
+  display:flex; justify-content:space-between;
+}
+</style>
+
+<div class="shell">
+  <aside class="side">
+    <div class="brand">
+      <div class="row">
+        <svg class="mark" width="24" height="27" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 1 L24 4.5 V13.5 C24 20.5 19.5 25.5 13 28 C6.5 25.5 2 20.5 2 13.5 V4.5 Z" fill="none" stroke="var(--text-faint)" stroke-width="1.4"/>
+          <path d="M13 1 V28" stroke="var(--text-faint)" stroke-width="1" stroke-dasharray="1.5 1.5"/>
+          <circle cx="7" cy="8" r="1" fill="var(--accent)"/>
+          <path d="M7 8 H11 M11 8 V11 M11 11 H8" stroke="var(--accent)" stroke-width="1" fill="none"/>
+          <path d="M4 17 H9 L11 13 L13.5 21 L15.5 17 H22" stroke="var(--accent)" stroke-width="1.3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span>PROJETO 50</span>
+      </div>
+      <small>Especificação técnica v1</small>
+    </div>
+    <nav>
+      <div class="grp">
+        <div class="grp-label">01 · Arquitetura</div>
+        <a href="#stack">Stack &amp; princípios</a>
+        <a href="#camadas">Camadas do sistema</a>
+        <a href="#motores">Motores de domínio</a>
+        <a href="#fluxo">Fluxo de dados</a>
+      </div>
+      <div class="grp">
+        <div class="grp-label">02 · Wireframes</div>
+        <a href="#w-dashboard">Dashboard</a>
+        <a href="#w-corpo">Corpo</a>
+        <a href="#w-peso">Peso</a>
+        <a href="#w-medidas">Registrar medidas</a>
+        <a href="#w-treino">Treino</a>
+        <a href="#w-protocolo">Protocolo (Treino 1/2/3)</a>
+        <a href="#w-execucao">Execução do exercício</a>
+        <a href="#w-fotos">Fotos</a>
+        <a href="#w-checkin">Check-in diário</a>
+        <a href="#w-metas">Metas</a>
+      </div>
+      <div class="grp">
+        <div class="grp-label">03 · Modelo de dados</div>
+        <a href="#er">Diagrama entidade-relação</a>
+        <a href="#tabelas">Especificação das tabelas</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="cover">
+      <div class="eyebrow">Documento técnico · Projeto 50</div>
+      <h1>Engenharia da Melhor Versão de Mim</h1>
+      <p class="lede">Arquitetura, wireframes e modelo de dados para o aplicativo pessoal de acompanhamento
+      corporal, treino e recuperação — local-first, orientado a evidência, construído para durar anos.</p>
+      <div class="cover-meta">
+        <div>Início do projeto<b>05/09/2026</b></div>
+        <div>Marco principal<b>05/02/2027</b></div>
+        <div>Baseline registrada<b>14/09/2026</b></div>
+        <div>Escopo deste doc<b>Arquitetura · Wireframes · Dados</b></div>
+      </div>
+    </div>
+
+    <!-- ================= 01 ARQUITETURA ================= -->
+    <section id="stack">
+      <div class="sec-head"><span class="sec-num">01.1</span><h2 class="sec-title">Stack &amp; princípios de arquitetura</h2></div>
+      <p class="sec-sub">O app precisa sobreviver anos de uso contínuo, guardar dados sensíveis (peso, fotos corporais,
+      dor, sono) e funcionar sem depender de servidor. A arquitetura é <b>local-first</b>: tudo funciona 100% offline;
+      sincronização e IA são módulos opcionais, nunca pré-requisitos.</p>
+
+      <div class="grid3">
+        <div class="card">
+          <div class="pill calc" style="margin-bottom:10px;">Cliente</div>
+          <div style="font-family:Montserrat; font-weight:700; font-size:15px;">Flutter</div>
+          <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">Um único código para iOS, Android e
+          desktop. Renderização própria garante consistência dos gráficos e telas ao longo de anos de updates de OS.</p>
+        </div>
+        <div class="card">
+          <div class="pill medido" style="margin-bottom:10px;">Persistência</div>
+          <div style="font-family:Montserrat; font-weight:700; font-size:15px;">SQLite + SQLCipher (Drift)</div>
+          <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">Banco relacional local criptografado em
+          repouso. Drift dá migrations tipadas — essencial para um schema que vai crescer por anos.</p>
+        </div>
+        <div class="card">
+          <div class="pill estimado" style="margin-bottom:10px;">Mídia</div>
+          <div style="font-family:Montserrat; font-weight:700; font-size:15px;">File storage criptografado</div>
+          <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">Fotos ficam fora do banco, em arquivos
+          AES-256 no sandbox do app. Nenhum upload automático a serviço externo.</p>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:18px;">
+        <b>Sincronização e backup</b> são opt-in: export manual (PDF/CSV/JSON/fotos) sempre disponível;
+        sincronização em nuvem (Postgres via Supabase, criptografia ponta-a-ponta) é um módulo desligado por padrão,
+        ativado apenas se o usuário pedir backup entre dispositivos.
+      </div>
+    </section>
+
+    <section id="camadas">
+      <div class="sec-head"><span class="sec-num">01.2</span><h2 class="sec-title">Camadas do sistema</h2></div>
+      <p class="sec-sub">Arquitetura em camadas (Clean Architecture simplificada). A regra de dependência é sempre
+      de fora para dentro: a UI depende do domínio, nunca o contrário — isso é o que permite trocar a persistência
+      ou adicionar sync sem reescrever as telas.</p>
+
+      <div class="layer">
+        <div class="lname"><span class="num">A</span> Apresentação</div>
+        <p>Telas Flutter + Riverpod (gestão de estado). Cada tela consome um ViewModel que já resolve unidades,
+        formatação e rótulos de confiança do dado (medido / calculado / estimado).</p>
+        <div class="items"><span class="chip">Dashboard</span><span class="chip">Corpo</span><span class="chip">Treino</span><span class="chip">Evolução</span><span class="chip">Fotos</span><span class="chip">Metas</span></div>
+      </div>
+      <div class="layer">
+        <div class="lname"><span class="num">B</span> Domínio</div>
+        <p>Regras de negócio puras, sem Flutter e sem SQL — testáveis isoladamente. É aqui que vivem os "motores"
+        descritos abaixo.</p>
+        <div class="items"><span class="chip">Motor de Tendência</span><span class="chip">Motor de Confiança do Dado</span><span class="chip">Motor de Progressão de Treino</span><span class="chip">Motor de Aderência</span><span class="chip">Motor de Alertas</span></div>
+      </div>
+      <div class="layer">
+        <div class="lname"><span class="num">C</span> Repositórios</div>
+        <p>Interfaces que abstraem a origem do dado. A UI nunca fala com SQLite diretamente — sempre com um
+        repositório, o que permite plugar sync depois sem tocar em telas.</p>
+        <div class="items"><span class="chip">BodyRepository</span><span class="chip">WorkoutRepository</span><span class="chip">RecoveryRepository</span><span class="chip">HabitRepository</span><span class="chip">GoalRepository</span><span class="chip">PhotoRepository</span></div>
+      </div>
+      <div class="layer">
+        <div class="lname"><span class="num">D</span> Persistência &amp; integrações</div>
+        <p>SQLite local (fonte da verdade), armazenamento de arquivos para fotos, exportador PDF/CSV/JSON,
+        e o módulo opcional de IA — que só é chamado sob ação explícita do usuário na tela de Insights.</p>
+        <div class="items"><span class="chip">SQLite/SQLCipher</span><span class="chip">File Store</span><span class="chip">Export Engine</span><span class="chip">Sync (opt-in)</span><span class="chip">Claude API (opt-in)</span>
+        <span class="chip">HealthKit / Health Connect (opt-in)</span></div>
+      </div>
+    </section>
+
+    <section id="motores">
+      <div class="sec-head"><span class="sec-num">01.3</span><h2 class="sec-title">Motores de domínio</h2></div>
+      <p class="sec-sub">O diferencial do Projeto 50 não é a tela — é a camada de domínio que transforma registros
+      soltos em leitura de tendência. Quatro motores fazem esse trabalho.</p>
+      <div class="grid2">
+        <div class="card">
+          <b style="font-family:Montserrat; font-weight:700; font-size:14px;">Motor de Confiança do Dado</b>
+          <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">Toda métrica carrega uma origem
+          obrigatória, propagada da entrada até o dashboard.</p>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;">
+            <span class="pill medido">medido</span><span class="pill">informado</span>
+            <span class="pill calc">calculado</span><span class="pill estimado">estimado</span>
+            <span class="pill">recomendado</span><span class="pill hipotese">hipótese</span>
+          </div>
+        </div>
+        <div class="card">
+          <b style="font-family:Montserrat; font-weight:700; font-size:14px;">Motor de Tendência</b>
+          <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">Média móvel de 7/28 dias sobre peso,
+          cintura, %gordura, força e cardio. Classifica em <span class="mono">melhorando / estável / piorando /
+          dados insuficientes</span> — nunca conclui com menos de N pontos (configurável, padrão 5).</p>
+        </div>
+        <div class="card">
+          <b style="font-family:Montserrat; font-weight:700; font-size:14px;">Motor de Progressão de Treino</b>
+          <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">Regra determinística sobre dor,
+          recuperação e desempenho recente → sugere manter, subir ou reduzir volume/carga. Nunca diagnostica a
+          causa da dor.</p>
+        </div>
+        <div class="card">
+          <b style="font-family:Montserrat; font-weight:700; font-size:14px;">Motor de Aderência &amp; Alertas</b>
+          <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">Agrega treino, alimentação, sono e
+          registro num índice semanal (0–100%) e dispara alertas neutros (positivo / atenção / recuperação / dados)
+          sem linguagem punitiva.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="fluxo">
+      <div class="sec-head"><span class="sec-num">01.4</span><h2 class="sec-title">Fluxo de dados ponta a ponta</h2></div>
+      <p class="sec-sub">Do registro no formulário até o insight no dashboard — sempre passando pelo Motor de
+      Confiança, que é o único lugar autorizado a rotular a origem do dado.</p>
+<pre class="mermaid">
+flowchart LR
+  U["Usuário"] --> F["Formulário<br/>(Check-in, Medidas, Treino...)"]
+  F --> R["Repositório"]
+  R --> DB[("SQLite<br/>criptografado")]
+  DB --> C["Motor de Confiança<br/>do Dado"]
+  C --> T["Motor de Tendência"]
+  C --> P["Motor de Progressão"]
+  C --> A["Motor de Aderência<br/>&amp; Alertas"]
+  T --> D["Dashboard &amp; Gráficos"]
+  P --> D
+  A --> D
+  D --> I["Insights (IA, opt-in)"]
+  R -. export manual .-> X["PDF / CSV / JSON"]
+  R -. opt-in .-> S[("Sync criptografado<br/>(nuvem)")]
+</pre>
+    </section>
+
+    <!-- ================= 02 WIREFRAMES ================= -->
+    <div class="sec-head" style="margin-bottom:6px;"><span class="sec-num">02</span><h2 class="sec-title">Wireframes das telas</h2></div>
+    <p class="sec-sub">Oito telas do MVP (seção 42 da especificação), em baixa fidelidade — a intenção é a
+    hierarquia de informação, não o visual final.</p>
+
+    <div class="frames">
+      <!-- DASHBOARD -->
+      <div id="w-dashboard">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div class="stitle">PROJETO 50</div>
+          <div class="ssub">Engenharia da melhor versão de mim</div>
+          <div class="sbody">
+            <div class="wrow">
+              <div class="wcard" style="flex:1.4;"><div class="wlabel">Peso atual</div><div class="wval">134,5<span style="font-size:9px;">kg</span></div><div class="wdelta">▾ méd. móvel 7d</div></div>
+              <div class="wcard"><div class="wlabel">Cintura</div><div class="wval">143<span style="font-size:9px;">cm</span></div><div class="wdelta">baseline: 143</div></div>
+            </div>
+            <div class="wcard">
+              <div class="wlabel">Próximo marco · 05 fev 2027</div>
+              <div class="wbar"><i style="width:6%"></i></div>
+              <div class="wdelta" style="color:#8A94A2;">144 dias restantes · 6% concluído</div>
+            </div>
+            <div class="wrow">
+              <div class="wcard"><div class="wlabel">Força</div><div class="wval" style="font-size:12px;">0/3</div></div>
+              <div class="wcard"><div class="wlabel">Cardio</div><div class="wval" style="font-size:12px;">0/150m</div></div>
+              <div class="wcard"><div class="wlabel">Aderência</div><div class="wval" style="font-size:12px;">—</div></div>
+            </div>
+            <div class="wcard" style="flex:1;">
+              <div class="wlabel">Hoje</div>
+              <div class="wlist">
+                <div class="wli"><span>Sono</span><span>—/10</span></div>
+                <div class="wli"><span>Energia</span><span>—/10</span></div>
+                <div class="wli"><span>Dor</span><span>—/10</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wtabbar"><span class="on">Home</span><span>Corpo</span><span>Treino</span><span>Evolução</span><span>Mais</span></div>
+        </div></div>
+        <div class="caption"><b>Dashboard</b> — cards de peso, cintura, marco, treino, movimento, recuperação, aderência</div>
+      </div>
+
+      <!-- CORPO -->
+      <div id="w-corpo">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div class="stitle">MEU CORPO</div>
+          <div class="ssub">Toque numa região</div>
+          <div class="sbody">
+            <div class="wsilhouette">
+              <svg viewBox="0 0 60 140" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="30" cy="12" r="9" fill="#232B34"/>
+                <path d="M14 26 Q30 20 46 26 L50 70 Q30 80 10 70 Z" fill="#232B34"/>
+                <path d="M12 30 L2 70" stroke="#232B34" stroke-width="7" stroke-linecap="round"/>
+                <path d="M48 30 L58 70" stroke="#232B34" stroke-width="7" stroke-linecap="round"/>
+                <path d="M18 78 L14 132" stroke="#232B34" stroke-width="10" stroke-linecap="round"/>
+                <path d="M42 78 L46 132" stroke="#232B34" stroke-width="10" stroke-linecap="round"/>
+              </svg>
+              <div class="wdot" style="top:32%; left:50%;"></div>
+              <div class="wdot" style="top:46%; left:50%;"></div>
+              <div class="wdot" style="top:20%; left:16%;"></div>
+              <div class="wdot" style="top:20%; left:84%;"></div>
+              <div class="wdot" style="top:70%; left:33%;"></div>
+              <div class="wdot" style="top:70%; left:67%;"></div>
+            </div>
+            <div class="wcard">
+              <div class="wlabel">Cintura · selecionado</div>
+              <div class="wrow" style="margin-top:4px;">
+                <div><div class="wlabel">Atual</div><div class="wval" style="font-size:12px;">143 cm</div></div>
+                <div><div class="wlabel">Baseline</div><div class="wval" style="font-size:12px;">143 cm</div></div>
+                <div><div class="wlabel">Δ</div><div class="wval" style="font-size:12px;">0 cm</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="wtabbar"><span>Home</span><span class="on">Corpo</span><span>Treino</span><span>Evolução</span><span>Mais</span></div>
+        </div></div>
+        <div class="caption"><b>Corpo</b> — silhueta com pontos por região, comparação vs. baseline ao toque</div>
+      </div>
+
+      <!-- PESO -->
+      <div id="w-peso">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div class="stitle">PESO</div>
+          <div class="ssub">Desde o início · 05 set 2026</div>
+          <div class="sbody">
+            <div class="wcard" style="height:70px; display:flex; align-items:flex-end; gap:3px; padding-bottom:6px;">
+              <svg viewBox="0 0 100 40" style="width:100%; height:36px;" preserveAspectRatio="none">
+                <polyline points="0,10 15,14 30,12 45,20 60,18 75,26 90,24 100,28" fill="none" stroke="#6E97F2" stroke-width="2"/>
+                <polyline points="0,14 15,16 30,17 45,19 60,21 75,23 90,25 100,26" fill="none" stroke="#3F4A58" stroke-width="1" stroke-dasharray="2 2"/>
+              </svg>
+            </div>
+            <div class="wgrid2">
+              <div class="wcard"><div class="wlabel">Inicial</div><div class="wval" style="font-size:12px;">134,5 kg</div></div>
+              <div class="wcard"><div class="wlabel">Menor</div><div class="wval" style="font-size:12px;">134,5 kg</div></div>
+              <div class="wcard"><div class="wlabel">Média 7d</div><div class="wval" style="font-size:12px;">134,5 kg</div></div>
+              <div class="wcard"><div class="wlabel">Tendência</div><div class="wval" style="font-size:12px; color:#8A94A2;">insuf.</div></div>
+            </div>
+            <div class="note" style="font-size:7px; padding:6px 8px; background:transparent; border-color:#262E38;">O peso oscila por água e glicogênio — a tendência importa mais que um dia isolado.</div>
+          </div>
+          <div class="wtabbar"><span>Home</span><span>Corpo</span><span class="on">Peso</span><span>Evolução</span><span>Mais</span></div>
+        </div></div>
+        <div class="caption"><b>Peso</b> — série temporal + média móvel de 7 dias, sem julgamento na oscilação diária</div>
+      </div>
+
+      <!-- MEDIDAS -->
+      <div id="w-medidas">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div class="stitle">Registrar medidas</div>
+          <div class="ssub">Checkpoint corporal</div>
+          <div class="sbody wlist">
+            <div class="wli"><span>Data</span><span>14/09/2026</span></div>
+            <div class="wli"><span>Peso (kg)</span><span>134,5</span></div>
+            <div class="wli"><span>Pescoço (cm)</span><span>48</span></div>
+            <div class="wli"><span>Tórax (cm)</span><span>142,5</span></div>
+            <div class="wli"><span>Cintura (cm)</span><span>143</span></div>
+            <div class="wli"><span>Quadril (cm)</span><span>123</span></div>
+            <div class="wli"><span>Braço D / E</span><span>42,5 / 40</span></div>
+            <div class="wli"><span>Coxa D / E</span><span>69 / 68</span></div>
+            <div class="wli"><span>Panturrilha D/E</span><span>46 / 45,5</span></div>
+            <div class="wcard" style="margin-top:8px; text-align:center; background:#1B2740; border-color:#2C3B5C;">
+              <span style="color:#8FB0FF; font-size:9px; font-family:'IBM Plex Mono';">Salvar como checkpoint</span>
+            </div>
+          </div>
+        </div></div>
+        <div class="caption"><b>Registrar medidas</b> — formulário completo, salvo como checkpoint corporal (a cada 2–4 semanas)</div>
+      </div>
+
+      <!-- TREINO -->
+      <div id="w-treino">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div class="stitle">TREINAMENTO</div>
+          <div class="wrow" style="padding:0 12px 6px;">
+            <div class="wchip" style="background:#1B2740; color:#8FB0FF; border-color:#2C3B5C;">Força</div>
+            <div class="wchip">Cardio</div>
+          </div>
+          <div class="sbody">
+            <div class="wcard">
+              <div class="wlabel">Supino reto</div>
+              <div class="wrow" style="margin-top:4px;">
+                <div><div class="wlabel">Séries</div><div class="wval" style="font-size:12px;">4</div></div>
+                <div><div class="wlabel">Reps</div><div class="wval" style="font-size:12px;">8</div></div>
+                <div><div class="wlabel">Carga</div><div class="wval" style="font-size:12px;">40kg</div></div>
+                <div><div class="wlabel">RPE</div><div class="wval" style="font-size:12px;">7</div></div>
+              </div>
+            </div>
+            <div class="wcard">
+              <div class="wlabel">Volume da sessão · recorde pessoal</div>
+              <div class="wbar"><i style="width:62%; background:#4CC38A;"></i></div>
+            </div>
+            <div class="wcard">
+              <div class="wlabel">Sugestão do motor de progressão</div>
+              <div style="font-size:8px; color:#B7C0CC; margin-top:3px;">Recuperação e esforço estáveis → manter carga na próxima sessão.</div>
+            </div>
+          </div>
+          <div class="wtabbar"><span>Home</span><span>Corpo</span><span class="on">Treino</span><span>Evolução</span><span>Mais</span></div>
+        </div></div>
+        <div class="caption"><b>Treino</b> — força e cardio separados, sugestão de progressão determinística</div>
+      </div>
+
+      <!-- EXECUÇÃO DO EXERCÍCIO -->
+      <div id="w-execucao">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div style="padding:6px 12px 0; display:flex; justify-content:space-between; align-items:center;">
+            <span style="color:#8A94A2; font-size:12px;">←</span>
+            <span class="wchip">Estação 3/8</span>
+          </div>
+          <div class="stitle" style="padding-top:8px;">Agachamento no Smith</div>
+          <div class="ssub">Amplo e controlado</div>
+          <div class="sbody">
+            <div class="wbigimg">
+              <svg viewBox="0 0 64 64" width="30" height="30" fill="none" stroke="#B9C2CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="26"/><path d="M26 22 L44 32 L26 42 Z" fill="#B9C2CC" stroke="none"/></svg>
+              <span class="wgiftag">GIF · execução</span>
+            </div>
+            <div class="wrow">
+              <div class="wcard" style="flex:1;">
+                <div class="wlabel">Carga</div>
+                <div class="wstepper"><span>−</span><b>60<i>kg</i></b><span>+</span></div>
+              </div>
+              <div class="wcard" style="flex:1;">
+                <div class="wlabel">Reps</div>
+                <div class="wstepper"><span>−</span><b>12</b><span>+</span></div>
+              </div>
+            </div>
+            <div class="wcard" style="text-align:center; background:#1B2740; border-color:#2C3B5C;">
+              <span style="color:#8FB0FF; font-size:9px; font-family:'IBM Plex Mono';">Concluir série · 2/3</span>
+            </div>
+            <div class="wdelta" style="color:#6E7A88; text-align:center;">última vez: 60kg × 12 · RPE 7</div>
+          </div>
+        </div></div>
+        <div class="caption"><b>Execução do exercício</b> — toque na estação do protocolo para abrir; imagem/gif grande + carga e reps editáveis, pré-preenchidos com o último registro</div>
+      </div>
+
+      <!-- FOTOS -->
+      <div id="w-fotos">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div class="stitle">EVOLUÇÃO VISUAL</div>
+          <div class="ssub">Privado · sem upload automático</div>
+          <div class="sbody">
+            <div class="wrow" style="justify-content:space-between; font-size:7.5px; color:#8A94A2;">
+              <span>Baseline</span><span style="color:#F1F4F7;">Atual</span>
+            </div>
+            <div class="wphotoRow"><div class="wphoto"></div><div class="wphoto"></div></div>
+            <div class="wcard" style="text-align:center;"><span class="mono" style="font-size:7.5px; color:#8FB0FF;">◂ slider antes / agora ▸</span></div>
+            <div class="wrow">
+              <div class="wchip">frente</div><div class="wchip">lado</div><div class="wchip">costas</div>
+            </div>
+          </div>
+          <div class="wtabbar"><span>Home</span><span>Corpo</span><span>Treino</span><span>Evolução</span><span class="on">Fotos</span></div>
+        </div></div>
+        <div class="caption"><b>Fotos</b> — comparação com slider, sem reconhecimento facial, armazenamento local</div>
+      </div>
+
+      <!-- CHECK-IN -->
+      <div id="w-checkin">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div class="stitle">Como você está hoje?</div>
+          <div class="ssub">&lt; 60 segundos</div>
+          <div class="sbody wlist">
+            <div class="wli"><span>Peso</span><span class="mono">___ kg</span></div>
+            <div class="wli"><span>Sono</span><span>●●●●●●○○○○</span></div>
+            <div class="wli"><span>Energia</span><span>●●●●●●○○○○</span></div>
+            <div class="wli"><span>Dor</span><span>●●○○○○○○○○</span></div>
+            <div class="wli"><span>Humor</span><span>●●●●●●●○○○</span></div>
+            <div class="wli"><span>Treino hoje</span><span>Sim / Não</span></div>
+            <div class="wli"><span>Cardio hoje</span><span>Sim / Não</span></div>
+            <div class="wcard" style="margin-top:6px; text-align:center; background:#1B2740; border-color:#2C3B5C;">
+              <span style="color:#8FB0FF; font-size:9px; font-family:'IBM Plex Mono';">Registrar dia</span>
+            </div>
+          </div>
+        </div></div>
+        <div class="caption"><b>Check-in diário</b> — captura rápida de estado, base do Motor de Aderência</div>
+      </div>
+
+      <!-- METAS -->
+      <div id="w-metas">
+        <div class="frame"><div class="screen">
+          <div class="notch"></div>
+          <div class="sbar"><span>9:41</span><span>●●●</span></div>
+          <div class="stitle">METAS</div>
+          <div class="wrow" style="padding:0 12px 6px;">
+            <div class="wchip" style="background:#1B2740; color:#8FB0FF; border-color:#2C3B5C;">Curto</div>
+            <div class="wchip">Médio</div><div class="wchip">Longo</div>
+          </div>
+          <div class="sbody">
+            <div class="wcard">
+              <div class="wlabel">Marco 1 · −5 kg</div>
+              <div class="wbar"><i style="width:0%"></i></div>
+              <div class="wdelta" style="color:#8A94A2;">134,5 → 129,5 kg</div>
+            </div>
+            <div class="wcard">
+              <div class="wlabel">Reduzir cintura 3cm em 30 dias</div>
+              <div class="wbar"><i style="width:0%"></i></div>
+            </div>
+            <div class="wcard">
+              <div class="wlabel">3 sessões de força / semana</div>
+              <div class="wbar"><i style="width:0%; background:#E0A458;"></i></div>
+            </div>
+          </div>
+          <div class="wtabbar"><span>Home</span><span>Corpo</span><span>Treino</span><span>Evolução</span><span class="on">Metas</span></div>
+        </div></div>
+        <div class="caption"><b>Metas</b> — curto/médio/longo prazo com métrica, valor inicial e desejado</div>
+      </div>
+    </div>
+
+    <div id="w-protocolo" style="margin-top:48px;">
+      <div class="sec-head"><span class="sec-num">02.1</span><h2 class="sec-title">Protocolo de treino — Treino 1 / 2 / 3</h2></div>
+      <p class="sec-sub">Conteúdo real de referência (<span class="mono">asserts/IMG_7219–7233</span>): um split ABC de
+      corpo inteiro, 8 estações por sessão, repetido em rotação — cada treino aquece, trabalha abdômen, uma variação
+      de perna, um puxar, um empurrar, um acessório e fecha com cardio. As duas peças que importam por estação:
+      a <b>imagem de execução</b> (como fazer o movimento) e o <b>campo de registro</b> (carga e repetições do dia) —
+      é isso que a tela <a href="#w-treino">Treino</a> precisa renderizar, e o resto — nome, séries-alvo, descanso —
+      é herdado do protocolo.</p>
+      <div class="legend" style="margin:0 0 4px;">
+        <span><i style="background:var(--surface-2); border:1px solid var(--border);"></i> ícone = imagem/gif de execução do exercício</span>
+        <span><i style="background:transparent; border:1px dashed var(--border);"></i> campo tracejado = onde o usuário registra carga e reps</span>
+      </div>
+
+      <div class="plan-grid">
+        <div class="plan-card">
+          <div class="plan-head"><div class="plan-title">Treino 1</div><div class="plan-focus">Peito · Costas · Perna (Smith)</div></div>
+          <div class="plan-rows">
+            <div class="plan-row"><span class="plan-num">1</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.8" cy="4.6" r="1.6"/><path d="M8 21l2.3-5 2-2-0.8-4"/><path d="M11.3 10.2l2.1 2 3.4-1.4"/><path d="M9.2 12.3l-3 1.4"/><path d="M12.4 12.2l2 4.3 3.4 1.6"/></svg></div><div class="plan-info"><div class="plan-name">Aquecimento</div><div class="plan-cue">Esteira, bike ou elíptico — como preferir</div></div><div class="plan-right"><div class="plan-meta">3–5 min</div><div class="plan-carga">Ritmo <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">2</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Abdominal crunch na máquina</div><div class="plan-cue">Controle o movimento</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">3</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Agachamento no Smith</div><div class="plan-cue">Amplo e controlado</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">4</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Puxada frontal aberta</div><div class="plan-cue">Peitoral aberto, tronco estável</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">5</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Supino reto com halteres</div><div class="plan-cue">Ombros pra trás</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">6</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Rosca direta com barra</div><div class="plan-cue">Cotovelos fixos</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">7</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Tríceps corda no pulley</div><div class="plan-cue">Extensão completa</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row is-rest"><span class="plan-num">8</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.8" cy="4.6" r="1.6"/><path d="M8 21l2.3-5 2-2-0.8-4"/><path d="M11.3 10.2l2.1 2 3.4-1.4"/><path d="M9.2 12.3l-3 1.4"/><path d="M12.4 12.2l2 4.3 3.4 1.6"/></svg></div><div class="plan-info"><div class="plan-name">Cardio</div><div class="plan-cue">Esteira, bike ou elíptico — ritmo constante</div></div><div class="plan-right"><div class="plan-meta">15 min</div><div class="plan-carga">Ritmo <i>___</i></div></div></div>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-head"><div class="plan-title">Treino 2</div><div class="plan-focus">Perna (Leg Press) · Costas · Peito</div></div>
+          <div class="plan-rows">
+            <div class="plan-row"><span class="plan-num">1</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.8" cy="4.6" r="1.6"/><path d="M8 21l2.3-5 2-2-0.8-4"/><path d="M11.3 10.2l2.1 2 3.4-1.4"/><path d="M9.2 12.3l-3 1.4"/><path d="M12.4 12.2l2 4.3 3.4 1.6"/></svg></div><div class="plan-info"><div class="plan-name">Aquecimento</div><div class="plan-cue">Esteira, bike ou elíptico — como preferir</div></div><div class="plan-right"><div class="plan-meta">3–5 min</div><div class="plan-carga">Ritmo <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">2</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Prancha abdominal</div><div class="plan-cue">Tronco reto e estável</div></div><div class="plan-right"><div class="plan-meta">3×30s · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">3</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Leg press</div><div class="plan-cue">Joelhos alinhados</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">4</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Panturrilha no leg press</div><div class="plan-cue">Amplitude completa</div></div><div class="plan-right"><div class="plan-meta">3×15 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">5</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Remada baixa com triângulo</div><div class="plan-cue">Cotovelos próximos</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">6</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Supino inclinado na máquina</div><div class="plan-cue">Foco no peitoral superior</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">7</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Elevação lateral com halteres</div><div class="plan-cue">Movimentos lentos e controlados</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row is-rest"><span class="plan-num">8</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.8" cy="4.6" r="1.6"/><path d="M8 21l2.3-5 2-2-0.8-4"/><path d="M11.3 10.2l2.1 2 3.4-1.4"/><path d="M9.2 12.3l-3 1.4"/><path d="M12.4 12.2l2 4.3 3.4 1.6"/></svg></div><div class="plan-info"><div class="plan-name">Cardio</div><div class="plan-cue">Esteira, bike ou elíptico — ritmo constante</div></div><div class="plan-right"><div class="plan-meta">15 min</div><div class="plan-carga">Ritmo <i>___</i></div></div></div>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-head"><div class="plan-title">Treino 3</div><div class="plan-focus">Perna (halter) · Costas · Ombro</div></div>
+          <div class="plan-rows">
+            <div class="plan-row"><span class="plan-num">1</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.8" cy="4.6" r="1.6"/><path d="M8 21l2.3-5 2-2-0.8-4"/><path d="M11.3 10.2l2.1 2 3.4-1.4"/><path d="M9.2 12.3l-3 1.4"/><path d="M12.4 12.2l2 4.3 3.4 1.6"/></svg></div><div class="plan-info"><div class="plan-name">Aquecimento</div><div class="plan-cue">Esteira, bike ou elíptico — como preferir</div></div><div class="plan-right"><div class="plan-meta">3–5 min</div><div class="plan-carga">Ritmo <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">2</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Abdominal deitado</div><div class="plan-cue">Mexa o tronco, e não a cabeça</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">3</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Agachamento com halter</div><div class="plan-cue">Pés afastados, pontas pra fora</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">4</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Puxada frontal pegada fechada</div><div class="plan-cue">Costas retas, alongamento completo</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">5</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Crucifixo na máquina</div><div class="plan-cue">Movimento em arco, alongue o peitoral</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">6</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Desenvolvimento na máquina</div><div class="plan-cue">Ombros alinhados</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row"><span class="plan-num">7</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="1.5" y="9" width="3" height="6" rx="1"/><rect x="19.5" y="9" width="3" height="6" rx="1"/><rect x="5" y="7" width="2.4" height="10" rx="1"/><rect x="16.6" y="7" width="2.4" height="10" rx="1"/><line x1="7.4" y1="12" x2="16.6" y2="12"/></svg></div><div class="plan-info"><div class="plan-name">Tríceps testa com halter</div><div class="plan-cue">Cotovelos fixos alinhados aos ombros</div></div><div class="plan-right"><div class="plan-meta">3×12 · 50s</div><div class="plan-carga">Carga <i>___</i></div></div></div>
+            <div class="plan-row is-rest"><span class="plan-num">8</span><div class="plan-thumb"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.8" cy="4.6" r="1.6"/><path d="M8 21l2.3-5 2-2-0.8-4"/><path d="M11.3 10.2l2.1 2 3.4-1.4"/><path d="M9.2 12.3l-3 1.4"/><path d="M12.4 12.2l2 4.3 3.4 1.6"/></svg></div><div class="plan-info"><div class="plan-name">Cardio</div><div class="plan-cue">Esteira, bike ou elíptico — ritmo constante</div></div><div class="plan-right"><div class="plan-meta">15 min</div><div class="plan-carga">Ritmo <i>___</i></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:16px;">
+        <b>Como isso vira dado:</b> cada linha acima é uma <span class="mono">WorkoutTemplateExercise</span> presa a um
+        <span class="mono">WorkoutTemplate</span> ("Treino 1"), com <span class="mono">demoImageUrl</span> apontando
+        para a imagem/gif de execução (armazenada localmente, mesma política de privacidade das fotos corporais).
+        Ao abrir a sessão, o app cria um <span class="mono">Workout</span> do dia referenciando o template e, por
+        estação, expõe só dois campos editáveis — <span class="mono">weight</span> e <span class="mono">reps</span>
+        de <span class="mono">StrengthExercise</span> — pré-preenchidos com a última carga registrada. É essa
+        comparação execução × template que alimenta o Motor de Progressão.
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:#6E97F2;"></i> dado medido / série real</span>
+      <span><i style="background:#3F4A58;"></i> projeção / referência</span>
+      <span><i style="background:#4CC38A;"></i> progresso / recorde</span>
+      <span><i style="background:#E0A458;"></i> abaixo da meta semanal</span>
+    </div>
+
+    <!-- ================= 03 MODELO DE DADOS ================= -->
+    <section id="er" style="margin-top:64px;">
+      <div class="sec-head"><span class="sec-num">03.1</span><h2 class="sec-title">Diagrama entidade-relação</h2></div>
+      <p class="sec-sub">Um <span class="mono">User</span> único no MVP (app pessoal) com todas as entidades
+      pendendo dele. <span class="mono">Workout</span> é o agregador de força e cardio; toda métrica de corpo carrega
+      <span class="mono">source</span> (a origem do dado) para alimentar o Motor de Confiança.</p>
+<pre class="mermaid">
+erDiagram
+  USER ||--o{ BODY_MEASUREMENT : registra
+  USER ||--o{ BODY_COMPOSITION : registra
+  USER ||--o{ WORKOUT_TEMPLATE : define
+  WORKOUT_TEMPLATE ||--o{ WORKOUT_TEMPLATE_EXERCISE : contem
+  USER ||--o{ WORKOUT : realiza
+  WORKOUT_TEMPLATE }o--o| WORKOUT : "segue (opcional)"
+  WORKOUT ||--o{ STRENGTH_EXERCISE : contem
+  WORKOUT ||--o{ CARDIO_SESSION : contem
+  WORKOUT_TEMPLATE_EXERCISE }o--o| STRENGTH_EXERCISE : "referencia"
+  USER ||--o{ PAIN_LOG : registra
+  USER ||--o{ SLEEP_LOG : registra
+  USER ||--o{ DAILY_CHECKIN : registra
+  USER ||--o{ NUTRITION_LOG : registra
+  USER ||--o{ HABIT : define
+  HABIT ||--o{ HABIT_LOG : gera
+  USER ||--o{ CLOTHING : cadastra
+  USER ||--o{ PHOTO_CHECKPOINT : registra
+  USER ||--o{ GOAL : define
+  USER ||--o{ MILESTONE : define
+  BODY_MEASUREMENT }o--|| MILESTONE : "pode disparar"
+
+  USER {
+    uuid id PK
+    string name
+    date birthDate
+    float height
+    date projectStart
+    date projectMilestone
+  }
+  BODY_MEASUREMENT {
+    uuid id PK
+    uuid userId FK
+    date date
+    float weight
+    float neck
+    float chest
+    float waist
+    float hip
+    float armRight
+    float armLeft
+    float thighRight
+    float thighLeft
+    float calfRight
+    float calfLeft
+    enum source
+  }
+  BODY_COMPOSITION {
+    uuid id PK
+    uuid userId FK
+    date date
+    float bodyFatPct
+    float fatMass
+    float leanMass
+    float muscleMass
+    float bodyWater
+    enum method
+    string source
+  }
+  WORKOUT_TEMPLATE {
+    uuid id PK
+    uuid userId FK
+    string name
+    int order
+    string focus
+  }
+  WORKOUT_TEMPLATE_EXERCISE {
+    uuid id PK
+    uuid templateId FK
+    int order
+    string exercise
+    string cue
+    string demoImageUrl
+    enum metricType
+    int targetSets
+    int targetReps
+    int targetSeconds
+    int restSeconds
+  }
+  WORKOUT {
+    uuid id PK
+    uuid userId FK
+    uuid templateId FK
+    date date
+    enum type
+    int duration
+    string notes
+  }
+  STRENGTH_EXERCISE {
+    uuid id PK
+    uuid workoutId FK
+    uuid templateExerciseId FK
+    string exercise
+    int sets
+    int reps
+    float weight
+    int rpe
+  }
+  CARDIO_SESSION {
+    uuid id PK
+    uuid workoutId FK
+    enum modality
+    int duration
+    float distance
+    float pace
+    int heartRate
+    int rpe
+  }
+  PAIN_LOG {
+    uuid id PK
+    uuid userId FK
+    date date
+    string bodyRegion
+    int intensity
+    string trigger
+    int duration
+    string notes
+  }
+  SLEEP_LOG {
+    uuid id PK
+    uuid userId FK
+    date date
+    time bedTime
+    time wakeTime
+    float duration
+    int quality
+  }
+  DAILY_CHECKIN {
+    uuid id PK
+    uuid userId FK
+    date date
+    float weight
+    int sleep
+    int energy
+    int pain
+    int mood
+    bool trainedStrength
+    bool trainedCardio
+    int nutrition
+    string notes
+  }
+  NUTRITION_LOG {
+    uuid id PK
+    uuid userId FK
+    date date
+    int meals
+    int protein
+    int vegFruit
+    int water
+    int ultraProcessed
+    int hunger
+    int satiety
+  }
+  HABIT {
+    uuid id PK
+    uuid userId FK
+    string name
+    enum frequency
+    int target
+  }
+  HABIT_LOG {
+    uuid id PK
+    uuid habitId FK
+    date date
+    bool completed
+  }
+  CLOTHING {
+    uuid id PK
+    uuid userId FK
+    string name
+    enum category
+    string size
+    float measurement
+    enum status
+  }
+  PHOTO_CHECKPOINT {
+    uuid id PK
+    uuid userId FK
+    date date
+    string frontPath
+    string sidePath
+    string backPath
+    string notes
+  }
+  GOAL {
+    uuid id PK
+    uuid userId FK
+    string name
+    enum category
+    enum horizon
+    float startValue
+    float targetValue
+    date deadline
+    enum status
+  }
+  MILESTONE {
+    uuid id PK
+    uuid userId FK
+    string name
+    enum type
+    float thresholdValue
+    date achievedDate
+    bool completed
+  }
+</pre>
+    </section>
+
+    <section id="tabelas">
+      <div class="sec-head"><span class="sec-num">03.2</span><h2 class="sec-title">Especificação das tabelas-chave</h2></div>
+      <p class="sec-sub">Detalhamento dos campos mais sensíveis ao domínio — os demais seguem o diagrama acima
+      diretamente.</p>
+
+      <div class="tbl-wrap" style="margin-bottom:18px;">
+        <div class="tbl-head"><h4>BodyMeasurement</h4><span class="pill medido">confiança: medido/informado</span></div>
+        <table>
+          <tr><th>Campo</th><th>Tipo</th><th>Observação</th></tr>
+          <tr><td class="field">date</td><td>date</td><td>Única por checkpoint; permite múltiplos pesos no dia via DailyCheckin</td></tr>
+          <tr><td class="field">weight</td><td>float (kg)</td><td>Medido — balança</td></tr>
+          <tr><td class="field">waist</td><td>float (cm)</td><td>Destaque no Dashboard — indicador de maior peso visual</td></tr>
+          <tr><td class="field">armRight / armLeft</td><td>float (cm)</td><td>Diferença calculada automaticamente = assimetria, nunca diagnóstico</td></tr>
+          <tr><td class="field">source</td><td>enum</td><td>medido · informado — obrigatório em toda linha</td></tr>
+        </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-bottom:18px;">
+        <div class="tbl-head"><h4>BodyComposition</h4><span class="pill estimado">confiança: varia por método</span></div>
+        <table>
+          <tr><th>Campo</th><th>Tipo</th><th>Observação</th></tr>
+          <tr><td class="field">bodyFatPct</td><td>float (%)</td><td>Nunca combinado entre métodos sem rótulo de origem</td></tr>
+          <tr><td class="field">method</td><td>enum</td><td>bioimpedância · DEXA · adipômetro · estimativa antropométrica · avaliação profissional · outro</td></tr>
+          <tr><td class="field">source</td><td>string</td><td>Texto livre: equipamento/profissional</td></tr>
+        </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-bottom:18px;">
+        <div class="tbl-head"><h4>WorkoutTemplateExercise</h4><span class="pill">estação do protocolo (Treino 1/2/3)</span></div>
+        <table>
+          <tr><th>Campo</th><th>Tipo</th><th>Observação</th></tr>
+          <tr><td class="field">demoImageUrl</td><td>string (arquivo local)</td><td>Imagem/gif de execução do exercício — a única mídia obrigatória por estação; mesma política de privacidade e armazenamento local das fotos corporais</td></tr>
+          <tr><td class="field">cue</td><td>string</td><td>Dica curta de execução (ex.: "Cotovelos fixos")</td></tr>
+          <tr><td class="field">metricType</td><td>enum</td><td>reps · tempo — define se a tela pede reps (ex.: 3×12) ou duração (ex.: prancha 30s)</td></tr>
+          <tr><td class="field">targetSets / targetReps / targetSeconds</td><td>int</td><td>Alvo do protocolo — é o que aparece como referência ao lado do campo de registro</td></tr>
+          <tr><td class="field">restSeconds</td><td>int</td><td>Descanso sugerido entre séries (padrão do protocolo: 50s)</td></tr>
+        </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-bottom:18px;">
+        <div class="tbl-head"><h4>StrengthExercise</h4><span class="pill medido">único ponto de registro do usuário na sessão</span></div>
+        <table>
+          <tr><th>Campo</th><th>Tipo</th><th>Observação</th></tr>
+          <tr><td class="field">templateExerciseId</td><td>uuid FK</td><td>Liga o registro real de volta à estação do protocolo (nome, imagem e alvo vêm de lá)</td></tr>
+          <tr><td class="field">weight</td><td>float (kg)</td><td>Campo editável na tela — pré-preenchido com a última carga registrada nesse exercício</td></tr>
+          <tr><td class="field">reps</td><td>int</td><td>Campo editável na tela — pré-preenchido com <span class="mono">targetReps</span> do protocolo</td></tr>
+          <tr><td class="field">rpe</td><td>int (0–10)</td><td>Opcional — percepção de esforço, alimenta o Motor de Progressão</td></tr>
+        </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-bottom:18px;">
+        <div class="tbl-head"><h4>Goal</h4><span class="pill calc">campo calculado: progress%</span></div>
+        <table>
+          <tr><th>Campo</th><th>Tipo</th><th>Observação</th></tr>
+          <tr><td class="field">horizon</td><td>enum</td><td>curto (7–30d) · médio (1–6m) · longo (6–24m)</td></tr>
+          <tr><td class="field">category</td><td>enum</td><td>peso · cintura · força · cardio · hábito · outro</td></tr>
+          <tr><td class="field">status</td><td>enum</td><td>ativa · concluída · pausada · abandonada</td></tr>
+        </table>
+      </div>
+
+      <div class="tbl-wrap">
+        <div class="tbl-head"><h4>Enum global — DataConfidence</h4><span class="pill hipotese">obrigatório em toda métrica derivada</span></div>
+        <table>
+          <tr><th>Valor</th><th>Significado</th></tr>
+          <tr><td class="field">MEDIDO</td><td>Captado por instrumento (balança, fita métrica, monitor)</td></tr>
+          <tr><td class="field">INFORMADO</td><td>Digitado pelo usuário sem instrumento de referência</td></tr>
+          <tr><td class="field">CALCULADO</td><td>Resultado matemático direto (ex.: IMC, diferença entre lados)</td></tr>
+          <tr><td class="field">ESTIMADO</td><td>Modelo/fórmula aproximando um valor não medido diretamente</td></tr>
+          <tr><td class="field">RECOMENDADO</td><td>Sugestão do sistema (ex.: motor de progressão)</td></tr>
+          <tr><td class="field">HIPOTESE</td><td>Correlação observada, não confirmada como causa</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <span>PROJETO 50 — documento vivo, revisar a cada marco</span>
+      <span>v1 · 14 set 2026</span>
+    </footer>
+  </main>
+</div>
